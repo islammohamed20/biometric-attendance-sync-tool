@@ -32,6 +32,34 @@ Run the `attendance-sync` file from the folder; This should setup all it's depen
 The `erpnext_sync.py` file is the "backbone" of this project. Apart from Windows _(which has its own wrapper `erpnext_sync_win.py`)_, this file can be directly used to set up the sync tool. Further information provided in the [/Wiki](https://github.com/frappe/biometric-attendance-sync-tool/wiki).
 
 
+## Improvements In This Version
+
+- Added a richer Windows GUI with live sync visibility for biometric device pulls and ERP sync progress.
+- Added a dedicated `Employee` screen that shows biometric users and per-employee sync outcomes.
+- Added live refresh for the Employee screen.
+- Added runtime sync snapshots in the CMD window while the GUI service is running.
+- Added safer restart behavior with device progress tracking and resume cursor handling in `status.json`.
+- Added duplicate-checkin handling so replayed records are skipped instead of halting the full sync cycle.
+- Added per-employee archives under `logs/Emloyee/` for:
+  - biometric device records
+  - successfully synced ERP records
+  - failed ERP sync records
+- Added logic to prevent re-syncing records that were already confirmed as synced.
+- Added startup cleanup support from the GUI for `logs/status.json` and `logs/attendance_success_log_Master.log`.
+- Added better runtime feedback in the GUI for:
+  - last pull time
+  - last push time
+  - current run progress
+  - last processed cursor
+
+
+## Notes
+
+- `local_config.py` is intentionally excluded from git and must not be committed because it contains instance-specific credentials.
+- `logs/` is excluded from git and is used as runtime state for sync progress, troubleshooting, and employee-level archives.
+- If you want to publish this project, copy `local_config.py.template` to `local_config.py` locally after cloning and fill in your own values.
+
+
 ## Setup Specifications (For CLI)
 
 1. Setup dependencies
